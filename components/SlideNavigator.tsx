@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo, useRef } from "react";
+import { useState, useEffect, useMemo, useRef, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { slides } from "@/lib/slides";
@@ -13,6 +13,12 @@ export default function SlideNavigator() {
   const [isOpen, setIsOpen] = useState(false);
   const [search, setSearch] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [prevSearch, setPrevSearch] = useState(search);
+
+  if (search !== prevSearch) {
+    setPrevSearch(search);
+    setSelectedIndex(0);
+  }
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
@@ -26,6 +32,11 @@ export default function SlideNavigator() {
         slide.id.toString().includes(term)
     );
   }, [search]);
+
+  const navigateToSlide = useCallback((id: number) => {
+    router.push(`/slides/${id}`);
+    setIsOpen(false);
+  }, [router]);
 
   // Keyboard handlers
   useEffect(() => {
@@ -65,7 +76,7 @@ export default function SlideNavigator() {
 
     window.addEventListener("keydown", handleKeyDown, true);
     return () => window.removeEventListener("keydown", handleKeyDown, true);
-  }, [isOpen, filteredSlides, selectedIndex]);
+  }, [isOpen, filteredSlides, selectedIndex, navigateToSlide]);
 
   // Focus input when modal opens
   useEffect(() => {
@@ -73,11 +84,6 @@ export default function SlideNavigator() {
       inputRef.current.focus();
     }
   }, [isOpen]);
-
-  // Reset selection when search changes
-  useEffect(() => {
-    setSelectedIndex(0);
-  }, [search]);
 
   // Scroll selected item into view
   useEffect(() => {
@@ -90,11 +96,6 @@ export default function SlideNavigator() {
       }
     }
   }, [selectedIndex, isOpen]);
-
-  const navigateToSlide = (id: number) => {
-    router.push(`/slides/${id}`);
-    setIsOpen(false);
-  };
 
   if (!isOpen) return null;
 

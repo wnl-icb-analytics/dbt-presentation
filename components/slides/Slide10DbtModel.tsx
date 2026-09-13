@@ -117,7 +117,7 @@ export default function Slide12DbtModel() {
           }}>
             <span style={{ color: "#f97316" }}>⚠</span>{" "}
             <span style={{ color: "#94a3b8" }}>
-              We're still hardcoding source tables. Let's fix that next.
+              We&apos;re still hardcoding source tables. Let&apos;s fix that next.
             </span>
           </div>
         </div>

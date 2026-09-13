@@ -108,7 +108,7 @@ export default function Slide15UseRef() {
       />
       <ClickReveal step={1}>
         <p style={{ marginTop: "1rem", fontSize: "1.15rem", color: "#94a3b8" }}>
-          <code style={{ color: "#22c55e" }}>ref('stg_olids_observation')</code> refers to the model file <code style={{ color: "#3b82f6" }}>stg_olids_observation.sql</code> — dbt resolves it to the correct schema/table at runtime.
+          <code style={{ color: "#22c55e" }}>{`ref('stg_olids_observation')`}</code> refers to the model file <code style={{ color: "#3b82f6" }}>stg_olids_observation.sql</code> — dbt resolves it to the correct schema/table at runtime.
         </p>
         <p style={{ marginTop: "0.5rem", fontSize: "1rem", color: "#64748b" }}>
           Model names must be unique across the project — dbt uses the filename (without <code style={{ color: "#64748b" }}>.sql</code>) as the identifier.

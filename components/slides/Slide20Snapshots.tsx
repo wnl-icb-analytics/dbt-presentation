@@ -79,7 +79,7 @@ export default function Slide22Snapshots() {
           borderRadius: "0.5rem",
           borderLeft: "3px solid #a855f7",
         }}>
-          <code style={{ color: "#a855f7", fontSize: "1.1rem" }}>strategy='timestamp'</code>
+          <code style={{ color: "#a855f7", fontSize: "1.1rem" }}>{`strategy='timestamp'`}</code>
           <p style={{ color: "#94a3b8", fontSize: "1.05rem", margin: "0.3rem 0 0 0" }}>
             Use when source has an <code style={{ color: "#a855f7", fontSize: "1.05rem" }}>updated_at</code> column. dbt compares timestamps to detect changes.
           </p>
@@ -90,7 +90,7 @@ export default function Slide22Snapshots() {
           borderRadius: "0.5rem",
           borderLeft: "3px solid #a855f7",
         }}>
-          <code style={{ color: "#a855f7", fontSize: "1.1rem" }}>strategy='check'</code>
+          <code style={{ color: "#a855f7", fontSize: "1.1rem" }}>{`strategy='check'`}</code>
           <p style={{ color: "#94a3b8", fontSize: "1.05rem", margin: "0.3rem 0 0 0" }}>
             Track cohort changes when no clean date key exists (e.g., population changes, multiple temporal eligibility factors).
           </p>

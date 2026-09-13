@@ -28,7 +28,7 @@ export default function Slide03WhyDbtExists() {
         transition={{ delay: 0.1 }}
         style={{ color: "#64748b", fontSize: "1.05rem", marginBottom: "0" }}
       >
-        Fishtown Analytics, 2016 — "Analytics teams have a workflow problem."
+        Fishtown Analytics, 2016 — &ldquo;Analytics teams have a workflow problem.&rdquo;
       </motion.p>
 
       <div style={{
@@ -159,7 +159,7 @@ export default function Slide03WhyDbtExists() {
               margin: "0 0 1.5rem 0",
               lineHeight: 1.6,
             }}>
-              Source control, testing, documentation, modularity, collaboration — these weren't
+              Source control, testing, documentation, modularity, collaboration — these weren&apos;t
               unique to analytics. They were software engineering fundamentals.
             </p>
 
@@ -170,7 +170,7 @@ export default function Slide03WhyDbtExists() {
               margin: 0,
               fontStyle: "italic",
             }}>
-              "Analytics is software."
+              &ldquo;Analytics is software.&rdquo;
             </p>
 
             <motion.div

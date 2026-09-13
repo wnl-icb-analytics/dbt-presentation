@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import DbtDAGExecution, { DbtDAGExecutionHandle } from "../DbtDAGExecution";
 
@@ -14,17 +14,13 @@ const commandDescriptions: Record<Command, string> = {
 
 export default function Slide18DbtExecution() {
   const [command, setCommand] = useState<Command>("run");
-  const [hasRun, setHasRun] = useState(false);
+  const [executedCommand, setExecutedCommand] = useState<Command | null>(null);
   const dagRef = useRef<DbtDAGExecutionHandle>(null);
-
-  // Reset hasRun when command changes
-  useEffect(() => {
-    setHasRun(false);
-  }, [command]);
+  const hasRun = executedCommand === command;
 
   const handleExecute = () => {
     dagRef.current?.execute();
-    setHasRun(true);
+    setExecutedCommand(command);
   };
 
   return (
@@ -113,7 +109,7 @@ export default function Slide18DbtExecution() {
           fontSize: "0.9rem",
         }}>
           <span style={{ color: "#22c55e", fontWeight: 500 }}>Parallel</span>
-          <span style={{ color: "#94a3b8" }}> — Models that don't depend on each other run concurrently</span>
+          <span style={{ color: "#94a3b8" }}> — Models that don&apos;t depend on each other run concurrently</span>
         </div>
         <div style={{
           padding: "0.4rem 0.6rem",
@@ -123,7 +119,7 @@ export default function Slide18DbtExecution() {
           fontSize: "0.9rem",
         }}>
           <span style={{ color: "#ef4444", fontWeight: 500 }}>Isolated</span>
-          <span style={{ color: "#94a3b8" }}> — Failures don't propagate to unrelated branches</span>
+          <span style={{ color: "#94a3b8" }}> — Failures don&apos;t propagate to unrelated branches</span>
         </div>
         <div style={{
           padding: "0.4rem 0.6rem",
