@@ -85,7 +85,7 @@ export default function Slide20SemanticModels() {
         }}
       >
         <span style={{ color: "#94a3b8", fontSize: "1.1rem" }}>Query with </span>
-        <code style={{ color: "#3b82f6", fontSize: "1.1rem" }}>SELECT * FROM semantic_view(ref('...'))</code>
+        <code style={{ color: "#3b82f6", fontSize: "1.1rem" }}>{`SELECT * FROM semantic_view(ref('...'))`}</code>
         <span style={{ color: "#94a3b8", fontSize: "1.1rem" }}> or use Cortex AI for natural language</span>
       </motion.div>
       </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState, useRef } from "react";
+import { useCallback, useEffect, useState, useRef, useSyncExternalStore } from "react";
 import { useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { getNextSlideId, getPrevSlideId, totalSlides } from "@/lib/slides";
@@ -30,22 +30,40 @@ export function useSlideContext() {
   return useContext(SlideContext);
 }
 
+function subscribeMacPlatform() {
+  return () => {};
+}
+
+function getMacPlatformSnapshot() {
+  return navigator.platform.toUpperCase().includes("MAC");
+}
+
+function getMacPlatformServerSnapshot() {
+  return false;
+}
+
 export default function SlideNavigation({
   slideId,
   totalSteps,
   children,
 }: SlideNavigationProps) {
   const router = useRouter();
-  const [currentStep, setCurrentStep] = useState(0);
-  const [isMac, setIsMac] = useState(false);
+  const [stepState, setStepState] = useState({ slideId, step: 0 });
+  const isMac = useSyncExternalStore(
+    subscribeMacPlatform,
+    getMacPlatformSnapshot,
+    getMacPlatformServerSnapshot
+  );
 
-  useEffect(() => {
-    setIsMac(navigator.platform.toUpperCase().indexOf("MAC") >= 0);
-  }, []);
+  if (stepState.slideId !== slideId) {
+    setStepState({ slideId, step: 0 });
+  }
+
+  const currentStep = stepState.slideId === slideId ? stepState.step : 0;
 
   const goNext = useCallback(() => {
     if (currentStep < totalSteps) {
-      setCurrentStep((s) => s + 1);
+      setStepState((s) => ({ ...s, step: s.step + 1 }));
     } else {
       const nextId = getNextSlideId(slideId);
       if (nextId) {
@@ -56,7 +74,7 @@ export default function SlideNavigation({
 
   const goPrev = useCallback(() => {
     if (currentStep > 0) {
-      setCurrentStep((s) => s - 1);
+      setStepState((s) => ({ ...s, step: s.step - 1 }));
     } else {
       const prevId = getPrevSlideId(slideId);
       if (prevId) {
@@ -84,11 +102,6 @@ export default function SlideNavigation({
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [goNext, goPrev]);
-
-  // Reset step when slide changes
-  useEffect(() => {
-    setCurrentStep(0);
-  }, [slideId]);
 
   // Prefetch adjacent slides for faster navigation
   useEffect(() => {

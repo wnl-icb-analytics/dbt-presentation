@@ -81,8 +81,16 @@ const complexNodes = generateComplexNodes();
 
 export default function DAGVisualization({ mode, animate = true }: DAGVisualizationProps) {
   const nodes = mode === "simple" ? simpleNodes : complexNodes;
+  const animationKey = `${mode}-${animate}`;
+  const [activeKey, setActiveKey] = useState(animationKey);
   const [completedNodes, setCompletedNodes] = useState<Set<string>>(new Set());
   const [runningNodes, setRunningNodes] = useState<Set<string>>(new Set());
+
+  if (activeKey !== animationKey) {
+    setActiveKey(animationKey);
+    setCompletedNodes(new Set());
+    setRunningNodes(new Set());
+  }
 
   // Dimensions
   const nodeWidth = mode === "simple" ? 180 : 75;
@@ -106,9 +114,6 @@ export default function DAGVisualization({ mode, animate = true }: DAGVisualizat
   useEffect(() => {
     if (!animate) return;
 
-    setCompletedNodes(new Set());
-    setRunningNodes(new Set());
-
     const nodeCount = nodes.length;
     const timeouts: NodeJS.Timeout[] = [];
 
@@ -130,7 +135,7 @@ export default function DAGVisualization({ mode, animate = true }: DAGVisualizat
 
     // Animate with varying speeds
     let time = 300;
-    order.forEach((nodeId, idx) => {
+    order.forEach((nodeId) => {
       // Start running
       const startTime = time;
       timeouts.push(setTimeout(() => {

@@ -114,8 +114,17 @@ export default function FileExplorer({
   defaultFile,
   title = "Project",
 }: FileExplorerProps) {
-  const [selectedFile, setSelectedFile] = useState<FileNode | null>(null);
+  const [selectedFile, setSelectedFile] = useState<FileNode | null>(() =>
+    defaultFile ? findFile(files, defaultFile) : null
+  );
+  const [trackedDefault, setTrackedDefault] = useState(defaultFile);
   const [highlighter, setHighlighter] = useState<HighlighterCore | null>(null);
+
+  if (defaultFile !== trackedDefault) {
+    setTrackedDefault(defaultFile);
+    const file = defaultFile ? findFile(files, defaultFile) : null;
+    if (file) setSelectedFile(file);
+  }
 
   useEffect(() => {
     createHighlighter({
@@ -123,13 +132,6 @@ export default function FileExplorer({
       langs: ["sql", "yaml", "bash"],
     }).then(setHighlighter);
   }, []);
-
-  useEffect(() => {
-    if (defaultFile) {
-      const file = findFile(files, defaultFile);
-      if (file) setSelectedFile(file);
-    }
-  }, [defaultFile, files]);
 
   const handleSelect = useCallback((node: FileNode) => {
     if (node.type === "file" && node.content) {

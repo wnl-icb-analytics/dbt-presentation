@@ -18,7 +18,7 @@ export default function Slide06WhereDbtFits() {
         transition={{ delay: 0.1 }}
         style={{ color: "#64748b", fontSize: "1.05rem", marginBottom: "0" }}
       >
-        The "T" in ELT — where data engineers, analytics engineers, and analysts collaborate.
+        The &ldquo;T&rdquo; in ELT — where data engineers, analytics engineers, and analysts collaborate.
       </motion.p>
 
       <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", gap: "1.5rem" }}>

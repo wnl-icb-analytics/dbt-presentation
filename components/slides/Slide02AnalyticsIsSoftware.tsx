@@ -45,7 +45,7 @@ export default function Slide02AnalyticsIsSoftware() {
             lineHeight: 1.5,
           }}
         >
-          So why don't we treat it that way?
+          So why don&apos;t we treat it that way?
         </motion.p>
 
         {/* The practices that were missing */}
